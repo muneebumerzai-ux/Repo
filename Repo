@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MJ Traders – Demo Trading</title>
+  <style>
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:#0b1220;
+      color:#fff;
+    }
+    header{
+      background:#020617;
+      padding:14px;
+      text-align:center;
+      font-size:22px;
+      font-weight:bold;
+      letter-spacing:1px;
+    }
+    .container{
+      padding:16px;
+      max-width:420px;
+      margin:auto;
+    }
+    .balance{
+      background:#020617;
+      padding:14px;
+      border-radius:14px;
+      text-align:center;
+      margin-bottom:14px;
+      font-size:18px;
+    }
+    .chart{
+      background:linear-gradient(180deg,#020617,#020617);
+      height:180px;
+      border-radius:14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin-bottom:14px;
+      font-size:14px;
+      color:#94a3b8;
+    }
+    .controls{
+      display:flex;
+      gap:10px;
+      margin-bottom:12px;
+    }
+    input{
+      flex:1;
+      padding:12px;
+      border-radius:10px;
+      border:none;
+      outline:none;
+      font-size:16px;
+    }
+    button{
+      flex:1;
+      padding:14px;
+      border:none;
+      border-radius:14px;
+      font-size:16px;
+      cursor:pointer;
+    }
+    .up{ background:#22c55e; color:#000; }
+    .down{ background:#ef4444; color:#fff; }
+    .result{
+      text-align:center;
+      margin-top:10px;
+      font-size:18px;
+    }
+    .history{
+      margin-top:14px;
+      font-size:14px;
+      background:#020617;
+      padding:12px;
+      border-radius:12px;
+    }
+    .history div{ margin-bottom:4px; }
+  </style>
+</head>
+<body><header>MJ Traders (Demo)</header><div class="container">
+  <div class="balance">Demo Balance: <span id="balance">10000</span> USD</div>  <div class="chart">Live Demo Chart (Simulation)</div>  <div class="controls">
+    <input type="number" id="amount" value="500" min="100" />
+  </div>  <div class="controls">
+    <button class="up" onclick="trade('UP')">UP</button>
+    <button class="down" onclick="trade('DOWN')">DOWN</button>
+  </div>  <div class="result" id="result">Select trade direction</div>  <div class="history" id="history"><strong>Trade History</strong></div>
+</div><script>
+  let balance = 10000;
+
+  function trade(direction){
+    const amount = parseInt(document.getElementById('amount').value);
+
+    if(amount > balance){
+      document.getElementById('result').innerText = 'Insufficient demo balance';
+      return;
+    }
+
+    const win = Math.random() > 0.5;
+
+    if(win){
+      balance += amount;
+      document.getElementById('result').innerText = `WIN (${direction})`;
+    } else {
+      balance -= amount;
+      document.getElementById('result').innerText = `LOSE (${direction})`;
+    }
+
+    document.getElementById('balance').innerText = balance;
+
+    const h = document.getElementById('history');
+    const row = document.createElement('div');
+    row.innerText = `${direction} | Amount: ${amount} | ${win ? 'WIN' : 'LOSE'}`;
+    h.appendChild(row);
+  }
+</script></body>
+</html>
