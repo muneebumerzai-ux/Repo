@@ -1,0 +1,80 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demo Prediction Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .app {
+      background: #020617;
+      padding: 20px;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 380px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+    h1 { text-align: center; margin-bottom: 10px; }
+    .balance { text-align: center; margin-bottom: 20px; font-size: 18px; }
+    .buttons { display: flex; gap: 10px; }
+    button {
+      flex: 1;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .red { background: #ef4444; color: #fff; }
+    .green { background: #22c55e; color: #000; }
+    .result { text-align: center; margin-top: 15px; font-size: 18px; }
+    .history { margin-top: 15px; font-size: 14px; }
+    .history div { margin-bottom: 4px; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <h1>Demo Prediction</h1>
+    <div class="balance">Balance: <span id="balance">10000</span> coins</div>
+    <div class="buttons">
+      <button class="red" onclick="play('Red')">Red</button>
+      <button class="green" onclick="play('Green')">Green</button>
+    </div>
+    <div class="result" id="result">Choose a color</div>
+    <div class="history" id="history"><strong>History:</strong></div>
+  </div>  <script>
+    let balance = 10000;
+    const bet = 500;
+
+    function play(choice) {
+      if (balance < bet) {
+        document.getElementById('result').innerText = 'No balance!';
+        return;
+      }
+
+      const outcomes = ['Red', 'Green'];
+      const result = outcomes[Math.floor(Math.random() * 2)];
+
+      if (choice === result) {
+        balance += bet;
+        document.getElementById('result').innerText = `You Win! Result: ${result}`;
+      } else {
+        balance -= bet;
+        document.getElementById('result').innerText = `You Lose! Result: ${result}`;
+      }
+
+      document.getElementById('balance').innerText = balance;
+      const history = document.getElementById('history');
+      const item = document.createElement('div');
+      item.innerText = `You: ${choice} | Result: ${result}`;
+      history.appendChild(item);
+    }
+  </script></body>
+</html>
